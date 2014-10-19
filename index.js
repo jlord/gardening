@@ -11,8 +11,7 @@ request(url, function (error, response, body) {
 
 function getStats(html) {
   $ = cheerio.load(html)
-  var today = ($('.day').length) - 1
-  var contributions = $('.day')[today].attribs['data-count']
+  var contributions = parseInt($('.day').last().attr('data-count'), 10)
 
   if (contributions === 0) {
     return console.log("---\n✗ Grey! " + username + " has " + contributions + " today!\n---")
