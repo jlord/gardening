@@ -1,18 +1,34 @@
 {
   "name": "gardening",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "CLI module to check if you made a public contribution on GitHub today",
   "main": "index.js",
   "bin": {
-    "garden": "node index.js"
+    "garden": "index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js"
   },
-  "author": "",
+  "author": "Jessica Lord",
   "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jlord/gardening.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jlord/gardening/issues"
+  },
+  "keywords": [
+    "contibution",
+    "github",
+    "open source",
+    "graph"
+  ],
   "dependencies": {
     "cheerio": "~0.17.0",
     "request": "~2.45.0"
+  },
+  "devDependencies": {
+    "tape": "~3.0.1"
   }
 }
