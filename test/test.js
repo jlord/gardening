@@ -5,7 +5,8 @@ var exec = require('child_process').exec
 // it's very likely to have no activity
 
 test('check zero', function(t) {
-  exec('garden eviljlord', function(error, stdout, stderr) {
+  exec('node index.js eviljlord', function(error, stdout, stderr) {
+    t.notOk(error, "no error running command")
     t.equal(stdout, "---\n✗ Grey! eviljlord has 0 today!\n---\n" )
   })
   t.end()
