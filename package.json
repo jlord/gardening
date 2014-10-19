@@ -1,0 +1,18 @@
+{
+  "name": "gardening",
+  "version": "0.0.0",
+  "description": "CLI module to check if you made a public contribution on GitHub today",
+  "main": "index.js",
+  "bin": {
+    "garden": "node index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "cheerio": "~0.17.0",
+    "request": "~2.45.0"
+  }
+}
