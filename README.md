@@ -1,5 +1,7 @@
 # Gardening
 
+[![Build Status](https://travis-ci.org/jlord/gardening.svg?branch=master)](https://travis-ci.org/jlord/gardening)
+
 Tending your open source garden?
 
 ![garden](http://f.cl.ly/items/3X0N0M1N0C0Y1S3Y0T3s/Screen%20Shot%202014-10-19%20at%2010.50.07%20PM.png)
@@ -38,7 +40,7 @@ or
 $ npm test
 ```
 
-Currently just checks the 0 contributions state. 
+Currently just checks the 0 contributions state.
 
 ---
 
