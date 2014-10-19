@@ -11,6 +11,7 @@ This is a command-line module to let you know if you (or someone else) has had a
 _Requires Node.js_
 
 ```Bash
+$ npm install -g gardening
 $ garden [githubusername]
 ```
 
@@ -23,7 +24,6 @@ This will return either:
 ✔︎ Green! jlord has 2 today!
 ---
 ```
-Â
 or
 
 ```Bash
@@ -31,6 +31,14 @@ or
 ✗ Grey! jlord has 0 today.
 ---
 ```
+
+### Test
+
+```Bash
+$ npm test
+```
+
+Currently just checks the 0 contributions state. 
 
 ---
 
