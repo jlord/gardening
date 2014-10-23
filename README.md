@@ -44,4 +44,4 @@ Currently just checks the 0 contributions state.
 
 ---
 
-Very MVP, mostly just want to save myself the incognito new window and bookmark click.
+Very basic. I'd like to also have it tell you what color/level green you're at also. 
