@@ -19,7 +19,6 @@ function getStats(html) {
   $ = cheerio.load(html)
   var lastContribution = $('.day').last()
   var contributions = parseInt($('.day').last().attr('data-count'), 10)
-  console.log("contributions", contributions, $('.day').last().attr('data-count'))
   if (!contributions && contributions != 0) return getPage()
 
   if (contributions === 0) {
