@@ -44,4 +44,4 @@ Currently just checks the 0 contributions state.
 
 ---
 
-Very MVP, mostly just want to save myself the incognito new window and bookmark click.
+This is very basic.

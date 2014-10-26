@@ -18,14 +18,25 @@ function getPage() {
 function getStats(html) {
   $ = cheerio.load(html)
   var lastContribution = $('.day').last()
-  var contributions = new Number($('.day').last().attr('data-count'))
-  if (!contributions) return getPage()
+  var contributions = parseInt($('.day').last().attr('data-count'), 10)
+  if (!contributions && contributions != 0) return getPage()
 
   if (contributions === 0) {
     return console.log("---\n✗ Grey! " + username +
       " has " + contributions + " today!\n---")
   } else {
-    return console.log("---\n✔︎ Green! " + username +
+
+    var greens = {
+      "#d6e685" : "Level 1",
+      "#8cc665" : "Level 2",
+      "#44a340" : "Level 3",
+      "#1e6823" : "Level 4"
+    }
+
+    var fill = $('.day').last().attr('fill')
+    var userFill = greens[fill]
+
+    return console.log("---\n✔︎ Green " + userFill + '! ' + username +
       " has " + contributions + " today!\n---")
   }
 }
