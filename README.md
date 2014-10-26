@@ -44,4 +44,4 @@ Currently just checks the 0 contributions state.
 
 ---
 
-Very basic. I'd like to also have it tell you what color/level green you're at also. 
+This is very basic.
