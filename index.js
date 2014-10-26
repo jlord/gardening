@@ -20,7 +20,7 @@ function getStats(html) {
   var lastContribution = $('.day').last()
   var contributions = parseInt($('.day').last().attr('data-count'), 10)
   console.log("contributions", contributions, $('.day').last().attr('data-count'))
-  if (!contributions) return getPage()
+  if (!contributions && contributions != 0) return getPage()
 
   if (contributions === 0) {
     return console.log("---\n✗ Grey! " + username +
@@ -35,7 +35,6 @@ function getStats(html) {
     }
 
     var fill = $('.day').last().attr('fill')
-    console.log("fill", fill)
     var userFill = greens[fill]
 
     return console.log("---\n✔︎ Green " + userFill + '! ' + username +
