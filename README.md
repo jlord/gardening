@@ -6,11 +6,11 @@ Tending your open source garden?
 
 ![garden](http://f.cl.ly/items/3X0N0M1N0C0Y1S3Y0T3s/Screen%20Shot%202014-10-19%20at%2010.50.07%20PM.png)
 
-This is a command-line module to let you know if you (or someone else) has had a public contribution today.
+This is a command-line module to let you know if you (or someone else) has had a public contribution today and to what level of green they reached (green levels are different for each user and based on average).
 
 ### To install
 
-_Requires Node.js_
+_Requires [Node.js](http://www.nodejs.org)_
 
 ```Bash
 $ npm install -g gardening
@@ -23,7 +23,7 @@ This will return either:
 
 ```Bash
 ---
-✔︎ Green! jlord has 2 today!
+✔︎ Green Level 2! jlord has 14 today!
 ---
 ```
 or
@@ -44,4 +44,4 @@ Currently just checks the 0 contributions state.
 
 ---
 
-This is very basic.
+:octocat: This is very basic, but saves me a few steps in the browser.
