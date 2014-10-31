@@ -2,11 +2,16 @@
 
 var request = require('request')
 var cheerio =  require('cheerio')
+var parseArgs = require('minimist')
 
-var username = process.argv[2]
+var args = parseArgs(process.argv)
+var username = args._[2]
 var url = 'https://github.com/users/' + username + '/contributions'
 
-getPage()
+if (args.y) {
+  console.log("Get yesterday's")
+  getDate()
+} else getPage()
 
 function getPage() {
   request(url, function (error, response, body) {
@@ -18,6 +23,7 @@ function getPage() {
 function getStats(html) {
   $ = cheerio.load(html)
   var lastContribution = $('.day').last()
+  console.log($('.day').last().attr('data-date'))
   var contributions = parseInt($('.day').last().attr('data-count'), 10)
   if (!contributions && contributions != 0) return getPage()
 
@@ -39,4 +45,19 @@ function getStats(html) {
     return console.log("---\n✔︎ Green " + userFill + '! ' + username +
       " has " + contributions + " today!\n---")
   }
+}
+
+function getDate() {
+  var today = new Date()
+  var yesterday = new Date(today)
+  yesterday.setDate(today.getDate() - 1)
+  yesterday.toLocaleDateString('en-US')
+  formatted = formatDate(yesterday)
+  console.log(formatted)
+}
+
+function formatDate(date) {
+  return date.getFullYear() + "-"
+         + (date.getMonth() + 1) + "-"
+         + date.getDate()
 }
