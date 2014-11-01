@@ -10,23 +10,40 @@ var url = 'https://github.com/users/' + username + '/contributions'
 
 if (args.y) {
   console.log("Get yesterday's")
-  getDate()
+  getByDate()
 } else getPage()
+
+// function getPage() {
+//   request(url, function (error, response, body) {
+//     if (error) return console.log(error, "Couldn't find page!")
+//     if (!error && response.statusCode == 200) getStats(body)
+//   })
+// }
 
 function getPage() {
   request(url, function (error, response, body) {
     if (error) return console.log(error, "Couldn't find page!")
-    if (!error && response.statusCode == 200) getStats(body)
+    if (!error && response.statusCode == 200) return body
   })
 }
 
-function getStats(html) {
+function getStats(html, date) {
   $ = cheerio.load(html)
-  var lastContribution = $('.day').last()
-  console.log($('.day').last().attr('data-date'))
+
+  if (!date) {
+    var lastContribution = $('.day').last()
+    var contributions = parseInt($('.day').last().attr('data-count'), 10)
+  } else {
+    var datedContribution = date
+    var contributions = parseInt($('.day').attr('data-date'), 10)
+  }
+
+  // <rect class="day" width="11" height="11" y="65" fill="#eeeeee" data-count="0" data-date="2014-10-31"></rect>
   var contributions = parseInt($('.day').last().attr('data-count'), 10)
   if (!contributions && contributions != 0) return getPage()
+}
 
+function contributionCounts(number) {
   if (contributions === 0) {
     return console.log("---\n✗ Grey! " + username +
       " has " + contributions + " today!\n---")
@@ -47,7 +64,7 @@ function getStats(html) {
   }
 }
 
-function getDate() {
+function getByDate() {
   var today = new Date()
   var yesterday = new Date(today)
   yesterday.setDate(today.getDate() - 1)
