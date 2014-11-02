@@ -23,19 +23,22 @@ if (args.y) {
 function getPage() {
   request(url, function (error, response, body) {
     if (error) return console.log(error, "Couldn't find page!")
-    if (!error && response.statusCode == 200) return body
+    if (!error && response.statusCode == 200) {
+      return body
+    }
   })
 }
 
-function getStats(html, date) {
+function getStats(date) {
+  var html = getPage()
+  console.log(date, html)
   $ = cheerio.load(html)
 
   if (!date) {
     var lastContribution = $('.day').last()
     var contributions = parseInt($('.day').last().attr('data-count'), 10)
   } else {
-    var datedContribution = date
-    var contributions = parseInt($('.day').attr('data-date'), 10)
+    contributionByDate(html, date)
   }
 
   // <rect class="day" width="11" height="11" y="65" fill="#eeeeee" data-count="0" data-date="2014-10-31"></rect>
@@ -64,6 +67,19 @@ function contributionCounts(number) {
   }
 }
 
+function contributionByDate(html, date) {
+  $ = cheerio.load(html)
+
+  var contributions = $('day')
+  var match
+  contributions.forEach(function findMatch(day) {
+    if (dat.attr('data-date').match(date)) {
+      match = day
+    }
+  })
+  return match
+}
+
 function getByDate() {
   var today = new Date()
   var yesterday = new Date(today)
@@ -71,6 +87,7 @@ function getByDate() {
   yesterday.toLocaleDateString('en-US')
   formatted = formatDate(yesterday)
   console.log(formatted)
+  getStats(formatted)
 }
 
 function formatDate(date) {
