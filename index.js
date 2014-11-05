@@ -21,11 +21,13 @@ if (args.y) {
 // }
 
 function getPage() {
+  var body
   request(url, function (error, response, body) {
     if (error) return console.log(error, "Couldn't find page!")
     if (!error && response.statusCode == 200) {
-      return body
+      body = body
     }
+    return body
   })
 }
 
