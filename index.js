@@ -11,14 +11,7 @@ var url = 'https://github.com/users/' + username + '/contributions'
 if (args.y) {
   console.log("Get yesterday's")
   getByDate()
-} else getPage()
-
-// function getPage() {
-//   request(url, function (error, response, body) {
-//     if (error) return console.log(error, "Couldn't find page!")
-//     if (!error && response.statusCode == 200) getStats(body)
-//   })
-// }
+} else getPage() // function should just take in date, either today's or yesterdays, rest should be shared.
 
 function getPage(date) {
   console.log("get page")
