@@ -20,35 +20,39 @@ if (args.y) {
 //   })
 // }
 
-function getPage() {
-  var body
+function getPage(date) {
+  console.log("get page")
+  var data = {}
+  if (date) data.date = date
+
   request(url, function (error, response, body) {
     if (error) return console.log(error, "Couldn't find page!")
     if (!error && response.statusCode == 200) {
-      body = body
+      data.html = body
+      return getStats(data)
     }
-    return body
   })
 }
 
-function getStats(date) {
-  var html = getPage()
-  console.log(date, html)
-  $ = cheerio.load(html)
+function getStats(data) {
+  console.log("date")
+  $ = cheerio.load(data.html)
 
-  if (!date) {
+  if (!data.date) {
+    console.log("no date")
     var lastContribution = $('.day').last()
     var contributions = parseInt($('.day').last().attr('data-count'), 10)
   } else {
-    contributionByDate(html, date)
+    contributionByDate(data.html, data.date)
   }
 
   // <rect class="day" width="11" height="11" y="65" fill="#eeeeee" data-count="0" data-date="2014-10-31"></rect>
-  var contributions = parseInt($('.day').last().attr('data-count'), 10)
+  // var contributions = parseInt($('.day').last().attr('data-count'), 10)
   if (!contributions && contributions != 0) return getPage()
 }
 
 function contributionCounts(number) {
+  console.log("count")
   if (contributions === 0) {
     return console.log("---\n✗ Grey! " + username +
       " has " + contributions + " today!\n---")
@@ -77,6 +81,7 @@ function contributionByDate(html, date) {
   contributions.forEach(function findMatch(day) {
     if (dat.attr('data-date').match(date)) {
       match = day
+      console.log(match)
     }
   })
   return match
@@ -89,7 +94,7 @@ function getByDate() {
   yesterday.toLocaleDateString('en-US')
   formatted = formatDate(yesterday)
   console.log(formatted)
-  getStats(formatted)
+  getPage(formatted)
 }
 
 function formatDate(date) {
