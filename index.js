@@ -17,7 +17,7 @@ if (args.y) {
   data.date = formatDate(new Date())
   data.y = false
   getPage()
-} // function should just take in date, either today's or yesterdays, rest should be shared.
+}
 
 function getPage() {
   request(url, function (error, response, body) {
@@ -31,15 +31,17 @@ function getPage() {
 
 function getStats() {
   console.log("getStats")
-  // console.log('html', data.html)
   $ = cheerio.load(data.html)
 
   var contributions = $('.day')
   // console.log(contributions)
 
   contributions.each(function(i, day) {
+    // console.log($(day).attr('data-date'), data.date)
     if ($(day).attr('data-date').match(data.date)) {
-      console.log("Match", day)
+      console.log("Match", $(day).attr('data-date'))
+    } else {
+      console.log("no match", $(day).attr('data-date'))
     }
   })
 
@@ -97,15 +99,11 @@ function contributionByDate() {
 
 function yesterdaysDate() {
   var today = new Date()
-  var yesterday = new Date(today)
-  yesterday.setDate(today.getDate() - 1)
-  yesterday.toLocaleDateString('en-US')
-  formatted = formatDate(yesterday)
-  return formatted
+  var yester = new Date(today)
+  yester.setDate(today.getDate() - 1)
+  return formatDate(yester)
 }
 
 function formatDate(date) {
-  return date.getFullYear() + "-"
-         + (date.getMonth() + 1) + "-"
-         + date.getDate()
+  return date.toISOString().split("T")[0]
 }
