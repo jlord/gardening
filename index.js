@@ -7,41 +7,55 @@ var parseArgs = require('minimist')
 var args = parseArgs(process.argv)
 var username = args._[2]
 var url = 'https://github.com/users/' + username + '/contributions'
+var data = {}
 
 if (args.y) {
-  console.log("Get yesterday's")
-  getByDate()
-} else getPage() // function should just take in date, either today's or yesterdays, rest should be shared.
+  data.date = yesterdaysDate()
+  data.y = true
+  getPage()
+} else {
+  data.date = formatDate(new Date())
+  data.y = false
+  getPage()
+} // function should just take in date, either today's or yesterdays, rest should be shared.
 
-function getPage(date) {
-  console.log("get page")
-  var data = {}
-  if (date) data.date = date
-
+function getPage() {
   request(url, function (error, response, body) {
     if (error) return console.log(error, "Couldn't find page!")
     if (!error && response.statusCode == 200) {
       data.html = body
-      return getStats(data)
+      return getStats()
     }
   })
 }
 
-function getStats(data) {
-  console.log("date")
+function getStats() {
+  console.log("getStats")
+  // console.log('html', data.html)
   $ = cheerio.load(data.html)
 
-  if (!data.date) {
-    console.log("no date")
-    var lastContribution = $('.day').last()
-    var contributions = parseInt($('.day').last().attr('data-count'), 10)
-  } else {
-    contributionByDate(data.html, data.date)
-  }
+  var contributions = $('.day')
+  // console.log(contributions)
 
-  // <rect class="day" width="11" height="11" y="65" fill="#eeeeee" data-count="0" data-date="2014-10-31"></rect>
-  // var contributions = parseInt($('.day').last().attr('data-count'), 10)
-  if (!contributions && contributions != 0) return getPage()
+  contributions.each(function(i, day) {
+    console.log($(day).attr('data-date'))
+    // if ($(day).attr('data-date').match(data.date)) {
+    //   console.log("Match", day)
+    // }
+  })
+
+
+
+  // if (!data.y) {
+  //   // then we're looking for today's stats
+  //
+  // } else {
+  //   contributionByDate(data.html, data.date)
+  // }
+  //
+  // // <rect class="day" width="11" height="11" y="65" fill="#eeeeee" data-count="0" data-date="2014-10-31"></rect>
+  // // var contributions = parseInt($('.day').last().attr('data-count'), 10)
+  // if (!contributions && contributions != 0) return getPage()
 }
 
 function contributionCounts(number) {
@@ -66,10 +80,12 @@ function contributionCounts(number) {
   }
 }
 
-function contributionByDate(html, date) {
-  $ = cheerio.load(html)
+function contributionByDate() {
+  $ = cheerio.load(data.html)
 
   var contributions = $('day')
+
+
   var match
   contributions.forEach(function findMatch(day) {
     if (dat.attr('data-date').match(date)) {
@@ -80,14 +96,13 @@ function contributionByDate(html, date) {
   return match
 }
 
-function getByDate() {
+function yesterdaysDate() {
   var today = new Date()
   var yesterday = new Date(today)
   yesterday.setDate(today.getDate() - 1)
   yesterday.toLocaleDateString('en-US')
   formatted = formatDate(yesterday)
-  console.log(formatted)
-  getPage(formatted)
+  return formatted
 }
 
 function formatDate(date) {
