@@ -7,6 +7,7 @@ var parseArgs = require('minimist')
 var args = parseArgs(process.argv)
 var username = args._[2]
 var url = 'https://github.com/users/' + username + '/contributions'
+
 var data = {}
 
 if (args.y) {
@@ -30,71 +31,38 @@ function getPage() {
 }
 
 function getStats() {
-  console.log("getStats")
   $ = cheerio.load(data.html)
-
   var contributions = $('.day')
-  // console.log(contributions)
 
   contributions.each(function(i, day) {
-    // console.log($(day).attr('data-date'), data.date)
     if ($(day).attr('data-date').match(data.date)) {
-      console.log("Match", $(day).attr('data-date'))
-    } else {
-      console.log("no match", $(day).attr('data-date'))
+      data.fill = $(day).attr('fill')
+      data.count = $(day).attr('data-count')
+      return contributionCounts()
+    } else if (i === contributions.length) {
+      return console.log("No match for date", $(day).attr('data-date'))
     }
   })
-
-
-
-  // if (!data.y) {
-  //   // then we're looking for today's stats
-  //
-  // } else {
-  //   contributionByDate(data.html, data.date)
-  // }
-  //
-  // // <rect class="day" width="11" height="11" y="65" fill="#eeeeee" data-count="0" data-date="2014-10-31"></rect>
-  // // var contributions = parseInt($('.day').last().attr('data-count'), 10)
-  // if (!contributions && contributions != 0) return getPage()
 }
 
-function contributionCounts(number) {
-  console.log("count")
-  if (contributions === 0) {
-    return console.log("---\n✗ Grey! " + username +
-      " has " + contributions + " today!\n---")
-  } else {
+function contributionCounts() {
+  var day = data.y ? "yesterday" : "today"
 
+  if (data.count === "0") {
+    return console.log("---\n✗ Grey! " + username +
+      " with " + data.count, day + "!\n---")
+  } else {
     var greens = {
       "#d6e685" : "Level 1",
       "#8cc665" : "Level 2",
       "#44a340" : "Level 3",
       "#1e6823" : "Level 4"
     }
-
-    var fill = $('.day').last().attr('fill')
-    var userFill = greens[fill]
+    var userFill = greens[data.fill] ? greens[data.fill] : 'unknown level'
 
     return console.log("---\n✔︎ Green " + userFill + '! ' + username +
-      " has " + contributions + " today!\n---")
+      " with " + data.count, day + "!\n---")
   }
-}
-
-function contributionByDate() {
-  $ = cheerio.load(data.html)
-
-  var contributions = $('day')
-
-
-  var match
-  contributions.forEach(function findMatch(day) {
-    if (dat.attr('data-date').match(date)) {
-      match = day
-      console.log(match)
-    }
-  })
-  return match
 }
 
 function yesterdaysDate() {
