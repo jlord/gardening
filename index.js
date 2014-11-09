@@ -38,10 +38,9 @@ function getStats() {
   // console.log(contributions)
 
   contributions.each(function(i, day) {
-    console.log($(day).attr('data-date'))
-    // if ($(day).attr('data-date').match(data.date)) {
-    //   console.log("Match", day)
-    // }
+    if ($(day).attr('data-date').match(data.date)) {
+      console.log("Match", day)
+    }
   })
 
 
