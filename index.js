@@ -2,6 +2,7 @@
 
 var request = require('request')
 var cheerio =  require('cheerio')
+var strftime = require('strftime')
 var parseArgs = require('minimist')
 
 var args = parseArgs(process.argv)
@@ -15,7 +16,7 @@ if (args.y) {
   data.y = true
   getPage()
 } else {
-  data.date = formatDate(new Date())
+  data.date = strftime('%F')
   data.y = false
   getPage()
 }
@@ -69,9 +70,5 @@ function yesterdaysDate() {
   var today = new Date()
   var yester = new Date(today)
   yester.setDate(today.getDate() - 1)
-  return formatDate(yester)
-}
-
-function formatDate(date) {
-  return date.toISOString().split("T")[0]
+  return strftime('%F', yester)
 }
