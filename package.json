@@ -1,6 +1,6 @@
 {
   "name": "gardening",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "CLI module to check if you made a public contribution on GitHub today",
   "main": "index.js",
   "bin": {
