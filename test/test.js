@@ -7,7 +7,15 @@ var exec = require('child_process').exec
 test('check zero', function(t) {
   exec('node index.js eviljlord', function(error, stdout, stderr) {
     t.notOk(error, "no error running command")
-    t.equal(stdout, "---\n✗ Grey! eviljlord with 0 today!\n---\n" )
+    t.equal(stdout, "---\n✗ Grey! eviljlord with 0 today!\n---\n")
+  })
+  t.end()
+})
+
+test('check zero yesterday', function(t) {
+  exec('node index.js eviljlord -y', function(error, stdout, stderr) {
+    t.notOk(error, "no error running command")
+    t.equal(stdout, "---\n✗ Grey! eviljlord with 0 yesterday!\n---\n")
   })
   t.end()
 })
