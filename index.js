@@ -5,6 +5,8 @@ var cheerio =  require('cheerio')
 var strftime = require('strftime')
 var parseArgs = require('minimist')
 
+// coool cooll oocolll
+
 var args = parseArgs(process.argv)
 var username = args._[2]
 var url = 'https://github.com/users/' + username + '/contributions'
